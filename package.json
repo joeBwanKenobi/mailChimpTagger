@@ -1,0 +1,18 @@
+{
+  "name": "mailchimptagger",
+  "version": "1.0.0",
+  "description": "Tag / Group contacts based on the source they were added from.",
+  "main": "main.js",
+  "dependencies": {
+    "@mailchimp/mailchimp_marketing": "^3.0.19",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js",
+    "debug": "node --inspect main.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
