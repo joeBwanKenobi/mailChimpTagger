@@ -9,13 +9,13 @@ mailchimp.setConfig({
 })
 let targetTags = process.env.TAGS.split(':')
 let sources = process.env.SOURCES.split(':')
+const listId = process.env.LIST_ID
 
 // App constants, new date is generated for reference on next run
 const now = new Date();
-const listId = process.env.LIST_ID
 const count = 100
 const dryRun = process.argv.includes('--dry-run') ? true : false
-const lastChanged = require('./runtimes.json').lastRun 
+const lastChanged = (fs.existsSync('./runtimes.json')) ? require('./runtimes.json').lastRun : now.toISOString()
 
 async function pull() {
     /* 
