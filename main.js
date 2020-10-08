@@ -2,6 +2,7 @@ const mailchimp = require("@mailchimp/mailchimp_marketing")
 const fs = require('fs')
 require('dotenv').config()
 const schedule = require("node-schedule")
+const { pathToFileURL } = require("url")
 
 // Configure Mailchimp app integration
 mailchimp.setConfig({
@@ -115,6 +116,10 @@ function write(dateTime, data) {
     let m = new Intl.DateTimeFormat('en', { month: '2-digit'}).format(dateTime)
     let y = new Intl.DateTimeFormat('en', { year: 'numeric'}).format(dateTime)
     let fDate = `${y}-${m}-${d}`
+    
+    if (!fs.existsSync('./logs/')) {
+        fs.mkdirSync('./logs')
+    }
     
     return fs.writeFileSync(`./logs/${fDate}-members.json`, JSON.stringify(data))
 }
