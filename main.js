@@ -1,6 +1,7 @@
 const mailchimp = require("@mailchimp/mailchimp_marketing")
 const fs = require('fs')
 require('dotenv').config()
+const schedule = require("node-schedule")
 
 // Configure Mailchimp app integration
 mailchimp.setConfig({
@@ -118,12 +119,18 @@ function write(dateTime, data) {
     return fs.writeFileSync(`./logs/${fDate}-members.json`, JSON.stringify(data))
 }
 
-// Check for untagged contacts since last run and update if found
-console.log(`Dry run: ${dryRun}`)
-if (dryRun) {
-    updateDryRun()
-} else if (!dryRun) {
-    update()
-    // Write last runtime to file for next since_last_changed reference
-    fs.writeFileSync('runtimes.json', JSON.stringify({lastRun: now.toISOString()}))
+function run() {
+    // Check for untagged contacts since last run and update if found
+    console.log(`Dry run: ${dryRun}`)
+    if (dryRun) {
+        updateDryRun()
+    } else if (!dryRun) {
+        update()
+        // Write last runtime to file for next since_last_changed reference
+        fs.writeFileSync('runtimes.json', JSON.stringify({lastRun: now.toISOString()}))
+    }
 }
+
+schedule.scheduleJob('0 0 * * *', () => {
+    run()
+})
