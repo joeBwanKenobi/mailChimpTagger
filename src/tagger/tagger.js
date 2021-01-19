@@ -2,7 +2,7 @@
 const mailchimp = require("@mailchimp/mailchimp_marketing")
 
 class Tagger {
-    constructor(listId, sources, targetTags, lastChanged, count = 100) {
+    constructor(listId, sources, targetTags, lastChanged, count = 10) {
         this.listId = listId
         this.sources = sources
         this.targetTags = targetTags
